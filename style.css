@@ -1,0 +1,14 @@
+body {
+    background-image: url(bg.png);
+    background-size: cover;
+    text-align: center;
+}
+h1 {
+    color:antiquewhite;
+    font-size:80px;
+}
+
+p {
+    color:firebrick
+    font-size:40px;
+}

@@ -1,14 +1,234 @@
-body {
-    background-image: url(bg.png);
-    background-size: cover;
-    text-align: center;
-}
-h1 {
-    color:antiquewhite;
-    font-size:80px;
+/* 用变量统一视觉：改这里即可调整全站配色、内容宽度与留白。 */
+:root {
+    color-scheme: dark;
+    --background: #111110;
+    --surface: #1a1a18;
+    --text: #f3f0e8;
+    --muted: #b7b4ab;
+    --accent: #ff543e;
+    --line: #3a3935;
+    --page-padding: clamp(20px, 4vw, 64px);
+    --content-width: 1280px;
 }
 
-p {
-    color:firebrick
-    font-size:40px;
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p, figure { margin: 0; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; height: auto; }
+::selection { color: var(--background); background: var(--accent); }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+.container { width: min(100% - var(--page-padding) * 2, var(--content-width)); margin-inline: auto; }
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 20px;
+    z-index: 20;
+    padding: 10px 18px;
+    color: var(--background);
+    background: var(--text);
+    transform: translateY(-160%);
+}
+.skip-link:focus { transform: translateY(0); }
+
+/* 导航保持可见；窄屏直接换行，无需额外的菜单脚本。 */
+.site-header { position: sticky; top: 0; z-index: 10; background: var(--background); border-bottom: 1px solid var(--line); }
+.header-inner { min-height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 800; line-height: 1.3; white-space: nowrap; }
+.brand-mark { color: var(--accent); font-size: 48px; font-weight: 400; }
+.brand small { display: block; margin-top: 5px; color: var(--muted); font-size: 9px; letter-spacing: 3px; }
+nav { display: flex; align-items: center; gap: clamp(20px, 3vw, 44px); font-size: 14px; }
+nav a { display: inline-flex; align-items: center; min-height: 44px; padding-block: 12px; white-space: nowrap; transition: color 160ms ease; }
+nav a:hover, .back-top:hover { color: var(--accent); }
+.nav-tour { font-weight: 700; }
+.nav-tour span { margin-left: 8px; color: var(--accent); }
+.nav-music { color: var(--accent); font-weight: 700; }
+.nav-music span { margin-left: 8px; }
+
+.hero { display: grid; grid-template-columns: 0.85fr 1.4fr; align-items: center; gap: clamp(32px, 4vw, 64px); padding-block: clamp(48px, 6vw, 88px); }
+.eyebrow { margin-bottom: 24px; color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+.signal-dot { display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: var(--accent); border-radius: 50%; }
+h1 { font-size: clamp(56px, 6.5vw, 94px); font-weight: 900; letter-spacing: -4px; line-height: 1.12; }
+h1 > span { color: var(--accent); }
+.hero-description { margin-top: 28px; color: var(--muted); font-size: 17px; }
+.tour-status { margin-top: 26px; font-size: 13px; }
+.tour-status span { margin-left: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.button { display: inline-flex; align-items: center; justify-content: space-between; gap: 44px; min-height: 52px; margin-top: 16px; padding: 12px 22px; color: var(--background); background: var(--accent); font-size: 14px; font-weight: 800; transition: background 160ms ease; }
+.button:hover { background: #ff806f; }
+.button span { font-size: 21px; }
+.hero-art { min-width: 0; }
+.art-caption, .hero-art figcaption { display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 11px; letter-spacing: 1px; }
+.art-caption { padding-block: 12px; border-top: 1px solid var(--accent); }
+.art-caption span:first-child { color: var(--accent); font-weight: 700; }
+.hero-art img { width: 100%; border: 1px solid var(--line); }
+.hero-art figcaption { padding-top: 14px; color: var(--muted); }
+.hero-art figcaption span span { color: var(--accent); }
+
+.tour-strip { border-block: 1px solid var(--line); }
+.strip-inner { display: grid; grid-template-columns: 1.2fr repeat(4, 1fr); align-items: center; }
+.strip-label { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+.strip-inner a { display: flex; justify-content: center; gap: 18px; padding: 22px 12px; border-left: 1px solid var(--line); font-size: 15px; font-variant-numeric: tabular-nums; }
+.strip-inner a:hover { background: var(--surface); }
+.strip-inner a span { font-weight: 700; }
+
+.section { padding-block: clamp(64px, 7vw, 100px); }
+h2 { font-size: clamp(30px, 3.3vw, 46px); font-weight: 800; line-height: 1.35; letter-spacing: -1px; }
+.about { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; border-bottom: 1px solid var(--line); }
+.about-copy { padding-top: 34px; color: var(--muted); font-size: 14px; }
+.about-copy .lead { margin-bottom: 22px; color: var(--text); font-size: 20px; line-height: 1.8; }
+.tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.tags span { padding: 5px 13px; border: 1px solid var(--line); font-size: 11px; }
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; }
+.section-heading .eyebrow { margin-bottom: 16px; }
+.section-note { color: var(--muted); font-size: 12px; }
+
+/* Grid 负责成员卡片排布，卡片高度由内容自然撑开。 */
+.members-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.member-card { position: relative; padding: 28px 24px; border: 1px solid var(--line); border-top: 2px solid var(--accent); background: var(--surface); }
+/* # 复用原海报，用圆形窗口定位每个人的脸，不修改图片或额外下载素材。
+   # 图片宽度放大为窗口的 8.5 倍；x/y 表示图片相对窗口的偏移。 */
+.member-avatar { position: relative; width: min(100%, 144px); aspect-ratio: 1; margin-bottom: 28px; overflow: hidden; border: 2px solid var(--line); border-radius: 50%; background: var(--background); }
+.member-avatar img { position: absolute; width: 850%; max-width: none; height: auto; left: var(--avatar-x); top: var(--avatar-y); }
+.avatar-mitsui { --avatar-x: -155.38%; --avatar-y: -39.47%; }
+.avatar-haruko { --avatar-x: -301.29%; --avatar-y: -66.93%; }
+.avatar-sakuragi { --avatar-x: -670.87%; --avatar-y: -129.96%; }
+.avatar-rukawa { --avatar-x: -477.69%; --avatar-y: -118.78%; }
+.member-number { position: absolute; top: 28px; right: 24px; color: var(--muted); font-size: 32px; font-weight: 300; line-height: 1; }
+.member-instrument { margin-bottom: 8px; color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
+.member-card h3 { font-size: 30px; line-height: 1.4; }
+.member-role { margin-top: 6px; color: var(--muted); font-size: 12px; }
+.member-bio { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; line-height: 1.9; }
+
+/* # 上方是实时频谱，下方保留原生控制条；手机上卡片变为一列。 */
+.music-section { border-top: 1px solid var(--line); }
+.music-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.track-card { min-width: 0; border: 1px solid var(--line); background: var(--surface); }
+.track-art { position: relative; display: flex; flex-direction: column; min-height: 340px; padding: 28px; overflow: hidden; color: var(--text); background: #292321; border-bottom: 1px solid var(--line); }
+.track-art-rock { --spectrum-color: #ff785f; background: radial-gradient(ellipse at 95% 0%, #52291f, transparent 70%), #211c1a; }
+.track-art-dj { --spectrum-color: #79cbd4; background: radial-gradient(ellipse at 95% 0%, #1f3d47, transparent 70%), #172125; }
+.track-art-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 10px; letter-spacing: 1.6px; }
+.spectrum-indicator { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 10px; letter-spacing: 0; }
+.spectrum-indicator::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.track-card[data-visualizer="live"] .spectrum-indicator { color: var(--spectrum-color); }
+.track-art strong { margin-top: 24px; font-size: clamp(42px, 5vw, 64px); font-weight: 900; line-height: 1; letter-spacing: -2px; }
+.track-art strong span { display: block; margin-top: 12px; color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: 3px; }
+.spectrum-panel { margin-top: 24px; }
+.track-spectrum { display: block; width: 100%; height: 148px; }
+.spectrum-labels { display: flex; justify-content: space-between; margin-top: 8px; color: var(--muted); font-size: 9px; letter-spacing: 1px; }
+.track-content { padding: 24px; }
+.track-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.track-heading h3 { font-size: 22px; }
+.track-format { color: var(--muted); font-size: 10px; letter-spacing: 1px; }
+.track-card audio { display: block; width: 100%; min-width: 0; border-radius: 4px; }
+.track-card audio:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+.track-status { min-height: 22px; margin-top: 14px; color: var(--muted); font-size: 12px; }
+.track-card[data-state="playing"] { border-color: var(--accent); }
+.track-card[data-state="playing"] .track-status { color: var(--accent); }
+.track-card[data-state="error"] .track-status { color: #ff998b; }
+
+.tour-section { background: #181816; border-block: 1px solid var(--line); }
+.title-dot { color: var(--accent); }
+.tour-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.show { display: grid; grid-template-columns: 160px 1fr 1.5fr auto; align-items: center; gap: 28px; padding-block: 28px; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
+.show-date { display: flex; flex-direction: column; }
+.show-date > span { font-size: 40px; font-weight: 700; letter-spacing: -1px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.show-date small { margin-top: 8px; color: var(--muted); font-size: 10px; letter-spacing: 1px; }
+.show h3 { font-size: 26px; }
+.show-venue p { font-size: 16px; }
+.show-venue > span { color: var(--muted); font-size: 12px; }
+.show-time { font-size: 20px; font-variant-numeric: tabular-nums; }
+.show-time span { display: block; color: var(--muted); font-size: 11px; text-align: right; }
+.tour-details { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; margin-top: 48px; }
+.tour-details h3 { margin-bottom: 22px; font-size: 18px; }
+.event-info dl { margin: 0; font-size: 13px; }
+.event-info dl > div { display: flex; gap: 24px; margin-top: 12px; }
+.event-info dt { flex: 0 0 64px; color: var(--muted); }
+.event-info dd { margin: 0; }
+.ticket-price { padding-top: 16px; border-top: 1px solid var(--line); }
+.ticket-price strong { color: var(--accent); font-size: 18px; }
+.tour-tips { padding-left: 32px; border-left: 1px solid var(--line); }
+.tour-tips ol { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13px; }
+.tour-tips li + li { margin-top: 12px; }
+
+.site-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-block: 38px; }
+.footer-brand { font-size: 16px; font-weight: 700; }
+.footer-brand span { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; letter-spacing: 2px; }
+.site-footer > p { color: var(--muted); font-size: 12px; }
+.back-top { padding-block: 12px; font-size: 12px; }
+.back-top span { margin-left: 12px; color: var(--accent); }
+
+/* 平板：首屏上下排列，成员卡片改为两列。 */
+@media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; gap: 36px; }
+    .hero-copy { position: relative; }
+    .hero h1 { font-size: clamp(64px, 10vw, 88px); }
+    .hero-description { margin-top: 20px; }
+    .about { gap: 32px; }
+    .members-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .strip-inner a { gap: 10px; font-size: 13px; }
+    .strip-label { font-size: 11px; }
+    .show { grid-template-columns: 120px 1fr 1.4fr auto; gap: 20px; }
+    .show-date > span { font-size: 34px; }
+    .show h3 { font-size: 22px; }
+    .tour-details { gap: 32px; }
+}
+
+/* 手机：内容改为单列，场次使用两列分两行，避免横向溢出。 */
+@media (max-width: 600px) {
+    html { scroll-padding-top: 148px; }
+    .header-inner { min-height: 0; flex-direction: column; align-items: flex-start; gap: 6px; padding-block: 12px 8px; }
+    .brand { font-size: 19px; gap: 10px; }
+    .brand-mark { font-size: 36px; }
+    .brand small { font-size: 8px; margin-top: 3px; }
+    nav { width: 100%; justify-content: space-between; gap: 12px; font-size: 12px; }
+    nav a { padding-block: 10px; }
+    .nav-tour span, .nav-music span { margin-left: 3px; }
+    .hero { padding-block: 40px; }
+    .hero h1 { font-size: clamp(58px, 14vw, 80px); letter-spacing: -3px; }
+    .eyebrow { font-size: 10px; letter-spacing: 1.4px; }
+    .hero-description { font-size: 15px; }
+    .art-caption, .hero-art figcaption { gap: 8px; font-size: 9px; letter-spacing: 0; }
+    .strip-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .strip-label { grid-column: 1 / -1; padding-block: 14px; border-bottom: 1px solid var(--line); }
+    .strip-inner a { padding: 16px 8px; font-size: 14px; }
+    .strip-inner a:nth-child(even) { border-left: 0; }
+    .strip-inner a:nth-last-child(-n + 2) { border-top: 1px solid var(--line); }
+    .about { grid-template-columns: 1fr; gap: 24px; }
+    .about-copy { padding-top: 0; }
+    .about-copy .lead { font-size: 18px; }
+    .section-heading { align-items: flex-start; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+    .members-grid { grid-template-columns: 1fr; }
+    .member-card { padding: 24px; }
+    .member-number { position: absolute; top: 24px; right: 24px; font-size: 32px; }
+    .member-avatar { width: 120px; margin-bottom: 24px; }
+    .member-bio { margin-top: 18px; padding-top: 16px; }
+    .music-grid { grid-template-columns: 1fr; gap: 20px; }
+    .track-art { min-height: 300px; padding: 24px; }
+    .track-art-header { font-size: 9px; letter-spacing: 1px; }
+    .track-spectrum { height: 120px; }
+    .track-content { padding: 20px; }
+    .show { grid-template-columns: 1fr 1fr; gap: 16px 20px; padding-block: 24px; }
+    .show h3 { justify-self: end; }
+    .show-venue p { font-size: 14px; }
+    .show-time { justify-self: end; font-size: 18px; }
+    .tour-details { grid-template-columns: 1fr; gap: 32px; margin-top: 36px; }
+    .tour-tips { padding: 28px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+    .event-info dl > div { gap: 16px; }
+    .ticket-price strong { font-size: 16px; }
+    .site-footer { gap: 20px; padding-block: 28px; }
+    .site-footer > p { order: 3; width: 100%; }
+}
+
+/* 尊重系统的减少动态效果设置。 */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    nav a, .button { transition: none; }
 }
